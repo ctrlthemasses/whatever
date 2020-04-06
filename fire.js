@@ -31,7 +31,7 @@ function setup() {
     button2.mousePressed(goToNature);
 
     // particle system
-    ps = new ParticleSystem(0, createVector(width / 2, height - 60), particle_texture);
+    ps = new ParticleSystem(0, createVector(width / 2, height - 60), particle_texture, 10);
 }
 
 function windowResized() {
@@ -69,22 +69,23 @@ function draw() {
     }
 
 }
-
+//sound here
+/*
 function mousePressed() {
     if (!sound.isPlaying()) {
         sound.loop();
     }
 }
-
+*/
 function mouseWheel(event) {
     console.log(event.delta);
     console.log("scrolling");
     if (event.delta > 0) {
         g -= 0.1;
-        ps.updateOrigin(-1);
+        ps.updateOrigin(-3);
     } else {
         g += 0.1;
-        ps.updateOrigin(1);
+        ps.updateOrigin(3);
     }
 }
 
@@ -112,13 +113,14 @@ function computeBrightness(increment, offset) {
  * @param img_ a texture for each particle in the system
  * @constructor
  */
-let ParticleSystem = function(num, v, img_) {
+let ParticleSystem = function(num, v, img_, size_) {
 
     this.particles = [];
     this.origin = v.copy(); // we make sure to copy the vector value in case we accidentally mutate the original by accident
     this.img = img_
+    this.size = size_
     for (let i = 0; i < num; ++i) {
-        this.particles.push(new Particle(this.origin, this.img));
+        this.particles.push(new Particle(this.origin, this.img, this.size));
     }
 };
 
@@ -147,10 +149,10 @@ ParticleSystem.prototype.run = function() {
 }
 
 /**
-* This function updates the origin of the particles
-*/
+ * This function updates the origin of the particles
+ */
 ParticleSystem.prototype.updateOrigin = function(direction) {
-    this.origin[1] += direction;
+    this.origin.set(this.origin.x, this.origin.y + direction);
 }
 
 
@@ -170,14 +172,14 @@ ParticleSystem.prototype.applyForce = function(dir) {
  * the originally set texture.
  */
 ParticleSystem.prototype.addParticle = function() {
-    this.particles.push(new Particle(this.origin, this.img));
+    this.particles.push(new Particle(this.origin, this.img, this.size));
 }
 
 //========= PARTICLE  ===========
 /**
  *  A simple Particle class, renders the particle as an image
  */
-let Particle = function(pos, img_) {
+let Particle = function(pos, img_, size_) {
     this.loc = pos.copy();
 
     let vx = randomGaussian() * 0.3;
@@ -187,6 +189,7 @@ let Particle = function(pos, img_) {
     this.acc = createVector();
     this.lifespan = 100.0;
     this.texture = img_;
+    this.size = size_
 }
 
 /**
@@ -204,6 +207,7 @@ Particle.prototype.render = function() {
     imageMode(CENTER);
     tint(255, this.lifespan);
     image(this.texture, this.loc.x, this.loc.y);
+    this.texture.resize(this.size, 0)
 }
 
 /**

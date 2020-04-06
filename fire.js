@@ -29,7 +29,7 @@ function setup() {
     button2 = createButton('last one');
     button2.position(windowWidth / 10, windowHeight * 9 / 10);
     button2.mousePressed(goToNature);
-
+    noCursor();
     // particle system
     ps = new ParticleSystem(0, createVector(width / 2, height - 60), particle_texture, 10);
 }
@@ -62,6 +62,7 @@ function draw() {
     let dx = map(mouseX, 0, width, -0.2, 0.2);
     let wind = createVector(dx, 0);
 
+    ps.updateOrigin();
     ps.applyForce(wind);
     ps.run();
     for (let i = 0; i < 2; i++) {
@@ -82,10 +83,8 @@ function mouseWheel(event) {
     console.log("scrolling");
     if (event.delta > 0) {
         g -= 0.1;
-        ps.updateOrigin(-3);
     } else {
         g += 0.1;
-        ps.updateOrigin(3);
     }
 }
 
@@ -151,8 +150,9 @@ ParticleSystem.prototype.run = function() {
 /**
  * This function updates the origin of the particles
  */
-ParticleSystem.prototype.updateOrigin = function(direction) {
-    this.origin.set(this.origin.x, this.origin.y + direction);
+
+ParticleSystem.prototype.updateOrigin = function() {
+    this.origin.set(mouseX, mouseY);
 }
 
 
@@ -204,10 +204,9 @@ Particle.prototype.run = function() {
  *  A function to display a particle
  */
 Particle.prototype.render = function() {
-    imageMode(CENTER);
-    tint(255, this.lifespan);
-    image(this.texture, this.loc.x, this.loc.y);
-    this.texture.resize(this.size, 0)
+    let c = color(15);
+    fill(c, 255 * 100 / this.lifespan);
+    circle(this.loc.x, this.loc.y, this.size);
 }
 
 /**

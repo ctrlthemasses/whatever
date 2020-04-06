@@ -79,11 +79,11 @@ function mouseWheel(event) {
 
 //code dump
 function goToFire() {
-    window.location.href = "/fire.html";
+    window.location.href = "./fire.html";
 }
 
 function goToWater() {
-    window.location.href = "/index.html";
+    window.location.href = "./index.html";
 }
 
 function computeBrightness(increment, offset) {

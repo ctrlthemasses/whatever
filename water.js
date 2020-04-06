@@ -98,11 +98,11 @@ function mouseWheel(event) {
 
 //Page transitions
 function goToFire() {
-    window.location.href = "/fire.html";
+    window.location.href = "./fire.html";
 }
 
 function goToNature() {
-    window.location.href = "/nature.html";
+    window.location.href = "./nature.html";
 }
 
 function computeBrightness(increment, offset) {

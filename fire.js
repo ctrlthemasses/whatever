@@ -90,11 +90,11 @@ function mouseWheel(event) {
 
 //code dump
 function goToNature() {
-    window.location.href = "/nature.html";
+    window.location.href = "./nature.html";
 }
 
 function goToWater() {
-    window.location.href = "/index.html";
+    window.location.href = "./index.html";
 }
 
 function computeBrightness(increment, offset) {

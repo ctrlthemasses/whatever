@@ -72,24 +72,24 @@ function draw() {
 
 function mouseWheel(event) {
     if (event.delta > 0) {
-        // Scrolling up
+      // Scrolling up
         g -= 0.1;
-        // Moves up foreground bubbles
+      // Moves up foreground bubbles
         for (var i = 0; i < numBubbles; i++){
             bubbles[i].move(-4);
         }
-        // Moves up background bubbles
+      // Moves up background bubbles
         for (var i = 0; i < numBubblesBg; i++){
             bubblesBg[i].move(-1);
         }
     } else {
-        // Scrolling down
+      // Scrolling down
         g += 0.1;
-        // Moves down foreground bubbles
+      // Moves down foreground bubbles
         for (var i = 0; i < numBubbles; i++){
             bubbles[i].move(4);
         }
-        // Moves down background bubbles
+      // Moves down background bubbles
         for (var i = 0; i < numBubblesBg; i++){
             bubblesBg[i].move(1);
         }
